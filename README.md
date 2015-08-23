@@ -1,3 +1,3 @@
 # Rails team dashboard
 
-This is the dashboard that displays information usefull for (Infinum's)[https://infinum.co] rails team.
+This is the dashboard that displays information usefull for [Infinum's](https://infinum.co) rails team.
