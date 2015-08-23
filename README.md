@@ -1,1 +1,3 @@
-Check out http://fabiocaseri.github.io/dashing-js for more information.
+# Rails team dashboard
+
+This is the dashboard that displays information usefull for (Infinum's)[https://infinum.co] rails team.
