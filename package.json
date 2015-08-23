@@ -1,13 +1,15 @@
 {
   "name": "rails-team-dashboard",
   "description": "rails-team-dashboard",
-  "author": "<Put your name here>",
+  "author": "Stanko Krtalic Rusendic",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
     "dashing-js": "~0.1.5",
     "dotenv": "^1.2.0",
-    "request": "^2.61.0"
+    "request": "^2.61.0",
+    "htmlparser": "^1.7.7",
+    "soupselect": "^0.2.0"
   },
   "engine": "node >= 0.10"
 }

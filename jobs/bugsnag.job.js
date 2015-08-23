@@ -17,6 +17,7 @@ var updateBugsnag = function() {
     requestOptions,
     function (error, response, body) {
       if (!error && response.statusCode == 200) {
+
         var errorsPerProject = [];
         var projects = JSON.parse(body);
 
@@ -25,8 +26,6 @@ var updateBugsnag = function() {
           var project = projects[i];
           getErrorCountForProject(projects, project, errorsPerProject);
         }
-
-
       }
     }
   );
