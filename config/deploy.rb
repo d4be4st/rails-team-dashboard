@@ -4,7 +4,7 @@ require 'mina/npm'
 
 set :domain, '192.168.1.38'
 set :deploy_to, '/home/pi/www/rails-team-dashboard'
-set :repository, 'git@github.com:Stankec/rails-team-dashboard.git'
+set :repository, 'https://github.com/Stankec/rails-team-dashboard.git'
 set :branch, 'master'
 set :user, 'pi'
 set :server_port, 80
