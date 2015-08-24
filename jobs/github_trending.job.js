@@ -23,7 +23,9 @@ var blacklist = [
   'middleman/middleman',
   'fastlane/gym', // iOS Tool
   'sinatra/sinatra',
-  'CocoaPods/CocoaPods'
+  'CocoaPods/CocoaPods',
+  'cesarferreira/dryrun',
+  'oa414/objc-zen-book-cn'
 ];
 
 var getTrending = function() {
