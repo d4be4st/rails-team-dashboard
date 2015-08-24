@@ -26,11 +26,17 @@ var updateMeetup = function() {
         nextMeetupString = '- TBA -';
 
         if (daysUntill > 0) {
-          nextMeetupString = '' + Math.floor(daysUntill) + ' days';
+          count = Math.floor(daysUntill);
+          measure = count === 1 ? 'day' : 'days';
+          nextMeetupString = '' + count + ' ' + measure;
         } else if (hoursUntill > 0) {
-          nextMeetupString = '' + Math.floor(hoursUntill) + ' days';
+          count = Math.floor(hoursUntill);
+          measure = count === 1 ? 'hour' : 'hours';
+          nextMeetupString = '' + count + ' ' + measure;
         } else if (minutesUntill > 0) {
-          nextMeetupString = '' + Math.floor(minutesUntill) + ' minutes';
+          count = Math.floor(minutesUntill);
+          measure = count === 1 ? 'minute' : 'minutes';
+          nextMeetupString = '' + count + ' ' + measure;
         }
 
         send_event('nextmeetup', { current: nextMeetupString });
