@@ -1,0 +1,31 @@
+<h1 class="title">
+  <img class="title-image" src="assets/code-climate.svg">
+  CodeClimate
+</h1>
+
+<ol>
+  <li data-foreach-item="items">
+    <div>
+      <span class="label" data-bind="item.title"></span>
+    </div>
+    <div>
+      <span class="value" data-bind="item.gpa"></span>
+      <span class="value" data-bind="item.coverage"></span>
+    </div>
+  </li>
+</ol>
+
+<ul class="list-nostyle">
+  <li data-foreach-item="items">
+    <div>
+      <span class="label" data-bind="item.title"></span>
+    </div>
+    <div>
+      <span class="value" data-bind="item.gpa"></span>
+      <span class="value" data-bind="item.coverage"></span>
+    </div>
+  </li>
+</ul>
+
+<p class="more-info" data-bind="moreinfo"></p>
+<p class="updated-at" data-bind="updatedAtMessage"></p>
