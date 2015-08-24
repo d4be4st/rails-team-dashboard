@@ -19,24 +19,22 @@ var updateMeetup = function() {
         var hourInMillis = 60 * minInMillis;
         var dayInMillis = 24 * hourInMillis;
 
-        var daysUntill = deltaTime / dayInMillis;
-        var hoursUntill = (deltaTime - daysUntill * dayInMillis) / hourInMillis;
-        var minutesUntill = (deltaTime - daysUntill * dayInMillis - hoursUntill * hourInMillis) / minInMillis;
+        var daysUntill = Math.floor(deltaTime / dayInMillis);
+        var hoursUntill = Math.floor((deltaTime - daysUntill * dayInMillis) / hourInMillis);
+        var minutesUntill = Math.floor((deltaTime - daysUntill * dayInMillis - hoursUntill * hourInMillis) / minInMillis);
+
 
         nextMeetupString = '- TBA -';
 
         if (daysUntill > 0) {
-          count = Math.floor(daysUntill);
-          measure = count === 1 ? 'day' : 'days';
-          nextMeetupString = '' + count + ' ' + measure;
+          measure = daysUntill === 1 ? 'day' : 'days';
+          nextMeetupString = '' + daysUntill + ' ' + measure;
         } else if (hoursUntill > 0) {
-          count = Math.floor(hoursUntill);
-          measure = count === 1 ? 'hour' : 'hours';
-          nextMeetupString = '' + count + ' ' + measure;
+          measure = hoursUntill === 1 ? 'hour' : 'hours';
+          nextMeetupString = '' + hoursUntill + ' ' + measure;
         } else if (minutesUntill > 0) {
-          count = Math.floor(minutesUntill);
-          measure = count === 1 ? 'minute' : 'minutes';
-          nextMeetupString = '' + count + ' ' + measure;
+          measure = minutesUntill === 1 ? 'minute' : 'minutes';
+          nextMeetupString = '' + minutesUntill + ' ' + measure;
         }
 
         send_event('nextmeetup', { current: nextMeetupString });
