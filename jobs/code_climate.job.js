@@ -3,6 +3,8 @@ var request = require('request');
 var token = process.env.CODELIMATE_API_KEY;
 var host = 'https://codeclimate.com';
 
+var repoCount = 0;
+
 function reposPath() {
   return host + '/api/repos' + '?api_token=' + token;
 }
@@ -18,51 +20,78 @@ function updateCodeClimate() {
       if (!error && response.statusCode == 200) {
         var repoObjects = [];
         var repos = JSON.parse(body);
+        repoCount = repos.length;
 
         for (var i = 0; i < repos.length; i++) {
           var repo = repos[i];
-          getRepoStats(repos, repo, repoObjects);
+          console.log("Sending: " + repo.url);
+          getRepoStats(repo, repoObjects);
         }
+      } else {
+        console.log("CodeClimate server error: " + body);
+        send_event('code_climate', { moreinfo: '- Server error -' });
       }
     }
   );
 }
 
-function getRepoStats(repos, repo, repoObjects) {
+function publishData(repoObjects) {
+  if (repoObjects.length < repoCount) {
+    return;
+  }
+
+  repoObjects = repoObjects.sort(function(a, b) {
+    if (a.score > b.score) return -1;
+    if (a.score < b.score) return 1;
+    return 0;
+  });
+
+  // console.log(repoObjects);
+
+  send_event(
+    'code_climate',
+    {
+      items: repoObjects.slice(0, 9),
+      moreinfo: ''
+    }
+  );
+}
+
+function getRepoStats(repo, repoObjects) {
   request(
     repoPath(repo.id),
     function (error, response, body) {
       if (!error && response.statusCode == 200) {
         var repoDetails = JSON.parse(body);
+        var snapshot = repoDetails.last_snapshot;
 
-        if (repoDetails.last_snapshot) {
-          var snapshot = repoDetails.last_snapshot;
+        if (snapshot) {
+          var gpa = snapshot.gpa || 0.0;
+          var coverage = snapshot.covered_percent || 0.0;
 
           repoObjects.push(
             {
               title: repoDetails.name,
-              gpa: '' + (snapshot.gpa || 0.0) + ' GPA',
-              coverage: '' + (snapshot.covered_percent || 0.0) + '% COV',
-              security: 0.0
+              gpa: '' + gpa + ' GPA',
+              coverage: '' + coverage + '% COV',
+              score: gpa + coverage
+            }
+          );
+        } else {
+          repoObjects.push(
+            {
+              title: repoDetails.name,
+              gpa: '0.0 GPA',
+              coverage: '0% COV',
+              score: 0.0
             }
           );
         }
 
-        if (repoObjects.length < repos.length) {
-          return;
-        }
-
-        repoObjects = repoObjects.sort(function(a, b) {
-          var aScore = a.gpa + a.coverage + a.security;
-          var bScore = b.gpa + b.coverage + b.security;
-
-          if (aScore > bScore) return -1;
-          if (aScore < bScore) return 1;
-          return 0;
-        });
-
-
-        send_event('code_climate', { items: repoObjects.slice(0, 9) });
+        publishData(repoObjects);
+      } else {
+        repoCount -= 1;
+        publishData(repoObjects);
       }
     }
   );
