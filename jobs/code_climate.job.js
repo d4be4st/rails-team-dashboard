@@ -69,4 +69,4 @@ function getRepoStats(repos, repo, repoObjects) {
 }
 
 updateCodeClimate();
-setInterval(updateCodeClimate, 1 * 60 * 60 * 1000);
+setInterval(updateCodeClimate, 20 * 60 * 1000);
