@@ -24,7 +24,6 @@ function updateCodeClimate() {
 
         for (var i = 0; i < repos.length; i++) {
           var repo = repos[i];
-          // console.log("Sending: " + repo.url);
           getRepoStats(repo, repoObjects);
         }
       } else {
@@ -45,8 +44,6 @@ function publishData(repoObjects) {
     if (a.score < b.score) return 1;
     return 0;
   });
-
-  // console.log(repoObjects);
 
   send_event(
     'code_climate',
@@ -74,7 +71,7 @@ function getRepoStats(repo, repoObjects) {
               title: repoDetails.name,
               gpa: '' + gpa + ' GPA',
               coverage: '' + coverage + '% COV',
-              score: gpa + coverage
+              score: (gpa * 25) + coverage
             }
           );
         } else {
