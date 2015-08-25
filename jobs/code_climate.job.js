@@ -24,7 +24,7 @@ function updateCodeClimate() {
 
         for (var i = 0; i < repos.length; i++) {
           var repo = repos[i];
-          console.log("Sending: " + repo.url);
+          // console.log("Sending: " + repo.url);
           getRepoStats(repo, repoObjects);
         }
       } else {
